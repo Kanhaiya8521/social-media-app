@@ -53,3 +53,12 @@ export const getPosts = (page = 1, limit = 5) => {
         method: 'GET',
     });
 };
+
+export const login = (email, password) => {
+    return customFetch(API_URLS.login(), {
+        method: 'POST',
+        body: {email, password}
+
+    })
+
+};
