@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types'
 import styles from '../styles/home.module.css';
-import propType from 'prop-types'
+import Comment from './../components/Comment'; 
+// This is not error maine ek baar comment js se save kiya tha file ko then Comment.js kar diya that's why issa message aa rha hai
 
 const Home = ({ posts }) => {
   // console.log('posts', posts);
@@ -43,26 +45,21 @@ const Home = ({ posts }) => {
             </div>
 
             <div className={styles.postCommentsList}>
-              <div className={styles.postCommentsItem}>
-                <div className={styles.postCommentHeader}>
-                  <span className={styles.postCommentAuthor}>Gill</span>
-                  <span className={styles.postCommentTime}>a minute ago</span>
-                  <span className={styles.postCommentLikes}>22</span>
-                </div>
-
-                <div className={styles.postCommentContent}>Random comment</div>
+              <div className={styles.postCommentsList}>
+                {post.comments.map((comment) => (
+                  <Comment comment={comment} key={`comment-${comment._id}`} />
+                ))}
               </div>
             </div>
           </div>
         </div>
-        
       ))}
     </div>
   );
 };
 
-Home.prototype = {
-  posts: propType.array,
-}
+Home.propTypes = {
+  posts: PropTypes.array.isRequired,
+};
 
 export default Home;
