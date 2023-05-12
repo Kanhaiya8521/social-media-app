@@ -1,0 +1,21 @@
+import styles from '../styles/login.module.css';
+
+const Login = () => {
+    return (
+      <form className={styles.loginForm}>
+        <spam className={styles.loginSignupHeader}>Log In</spam>
+
+        <div className={styles.field}>
+          <input type="email" placeholder="Email" required />
+        </div>
+        <div className={styles.field}>
+          <input type="password" placeholder="Password" required />
+        </div>
+        <div className={styles.field}>
+          <button>Log In</button>
+        </div>
+      </form>
+    );
+};
+
+export default Login;

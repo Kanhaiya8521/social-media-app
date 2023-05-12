@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {getPosts} from '../api'
-import { Home } from './../pages/index'
+import { Home, Login } from './../pages/index'
 import {Loader, Navbar} from './';
 import { Routes, Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -38,9 +38,7 @@ function App() {
   if(loading) {
     return <Loader />;
   }
-  const Login = () => {
-    return <h1>login page</h1>
-  }
+
   const Signup = () => {
     return <h1>signup page</h1>
   };
