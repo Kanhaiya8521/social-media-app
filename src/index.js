@@ -6,12 +6,13 @@ import {App} from './components/index';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './providers/AuthProvider';
 
+console.log('AuthProvider', AuthProvider)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ToastProvider autoDismiss autoDismissTimeout={5000} placement="top-left">
       <Router>
-        <AuthProvider>
+        <AuthProvider>  
           <App />
         </AuthProvider>
       </Router>
