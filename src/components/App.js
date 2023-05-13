@@ -3,23 +3,23 @@ import {getPosts} from '../api'
 import { Home, Login } from './../pages/index'
 import {Loader, Navbar} from './';
 import { Routes, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useAuth } from "../hooks";
+
+const Signup = () => {
+  return <h1>signup page</h1>;
+};
+const Register = () => {
+  return <h1>register page</h1>;
+};
+const Page404 = () => {
+  return <h1>404</h1>;
+};
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [check, setCheck] = useState(true);
-  let {pathname} = useLocation();
-  console.log('pathname', pathname);
-
-  useEffect(() => {
-    const istrue = () => {
-      if (pathname === '/login') {
-        setCheck(false);
-      }
-    };
-    istrue();
-  }, [pathname]);
+  // loading islia hataya ki auth me loading hai
+  // const [loading, setLoading] = useState(true);
+  const auth = useAuth();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -28,41 +28,25 @@ function App() {
       if(response.success) {
         setPosts(response.data.posts);
       }
-      setLoading(false);
+      // setLoading(false);
     };
-    
     
     fetchPosts();
   }, []);
 
-  if(loading) {
+  if(auth.loading) {
     return <Loader />;
   }
-
-  const Signup = () => {
-    return <h1>signup page</h1>
-  };
-  const Register = () => {
-    return <h1>register page</h1>
-  };
-  const Page404 = () => {
-    return <h1>404</h1>;
-  };
   
-  
-  
-  // console.log('check', check);
   return (
     <div className="App">
-      {check && <Navbar />}
+      <Navbar />
       <Routes>
         <Route exact path="/" element={<Home posts={posts} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Page404 />} />
-
-        {/* <Home posts={posts} /> */}
       </Routes>
     </div>
   );
