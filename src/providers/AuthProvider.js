@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from "react"; //we want to excess authorization to all components with parent and child concepts
 import { useProviderAuth } from '../hooks'
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
 
 }
 export const AuthContext = createContext(initialState);
-
+// console.log('AuthContext', AuthContext);
 export const AuthProvider = ({ children }) => {
     const auth = useProviderAuth();
 
