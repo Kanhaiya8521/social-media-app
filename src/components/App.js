@@ -1,8 +1,18 @@
 import { Home, Login, Signup, Settings } from './../pages/index'
 import {Loader, Navbar} from './';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../hooks";
 
+
+function PrivateRoute({ children }) {
+  // console.log('children', children);
+  const auth = useAuth();
+  if(auth.user) {
+    return children;
+  } else {
+    return <Navigate to='/login' />
+  }
+}
 const Page404 = () => {
   return <h1>404</h1>;
 };
@@ -13,19 +23,6 @@ function App() {
   // const [loading, setLoading] = useState(true);
   const auth = useAuth();
 
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     const response = await getPosts();
-  //     console.log('response', response);
-  //     if(response.success) {
-  //       setPosts(response.data.posts);
-  //     }
-  //     // setLoading(false);
-  //   };
-    
-  //   fetchPosts();
-  // }, []);
-
   if(auth.loading) {
     return <Loader />;
   }
@@ -34,10 +31,17 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>
+          }
+        />
 
         <Route path="*" element={<Page404 />} />
       </Routes>
