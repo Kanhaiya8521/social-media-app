@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import {AuthContext} from '../providers/AuthProvider';
-import {login as userlogin, register} from '../api';
+import {login as userlogin, register, editProfile} from '../api';
 import jwt from 'jwt-decode'
 import {
   setItemInLocalStorage,
@@ -8,6 +8,8 @@ import {
   removeItemFromLocalStorage,
   getItemFromLocalStorage,
 } from '../utils';
+
+
 
 export const useAuth = () => {
     return useContext(AuthContext);
@@ -27,6 +29,30 @@ export const useProviderAuth = () => {
         setLoading(false);
     }, []);
 
+    const updateUser = async (userId, name, password, confirmPassword) => {
+        const response = await editProfile(
+          userId,
+          name,
+          password,
+          confirmPassword
+        );
+
+        if (response.success) {
+          setUser(response.data.user);
+          setItemInLocalStorage(
+            LOCALSTORAGE_TOKEN_KEY,
+            response.data.token ? response.data.token : null
+          );
+          return {
+            success: true,
+          };
+        } else {
+          return {
+            success: false,
+            message: response.message,
+          };
+        }
+    };
     const login = async (email, password) => {
         const response = await userlogin(email, password);
 
@@ -66,11 +92,12 @@ export const useProviderAuth = () => {
     };
 
     return {
-        user,
-        login,
-        logout,
-        loading,
-        signup
-    }
+      user,
+      login,
+      logout,
+      loading,
+      signup,
+      updateUser,
+    };
 
 };
